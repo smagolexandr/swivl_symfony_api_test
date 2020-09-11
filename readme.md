@@ -13,7 +13,7 @@ $ composer install
 ```
 where {project-dir} - directory where is project located.
 
-Create `.env.local`, configure db connection and run command:
+Create `.env.local`, configure db connection and run commands:
 ```sh
 $ bin/console doctrine:database:create
 $ bin/console doctrine:migrations:migrate
@@ -119,7 +119,7 @@ You can use [Postman collection](https://www.getpostman.com/collections/c29f61b6
         "updatedAt": "2020-09-11T13:27:21+00:00"
     }
     ```    
- - Update classroom active status
+ - Update classroom enabled status
    
    Request [PATCH]
     ```
@@ -127,6 +127,13 @@ You can use [Postman collection](https://www.getpostman.com/collections/c29f61b6
     ```
     Request body [JSON]
     ```
+    {
+        "id": 4,
+        "name": "room 0",
+        "enabled": false,
+        "createdAt": "2020-09-11T12:10:31+00:00",
+        "updatedAt": "2020-09-11T13:31:58+00:00"
+    }
     ``` 
     Response body [200]
     ```
