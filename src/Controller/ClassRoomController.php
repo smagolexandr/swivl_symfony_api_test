@@ -75,7 +75,7 @@ class ClassRoomController extends AbstractController
         $this->getDoctrine()->getManager()->persist($classroom);
         $this->getDoctrine()->getManager()->flush();
 
-        return $this->json([], 200);
+        return $this->json($classroom, 200);
     }
 
     /**
@@ -86,21 +86,28 @@ class ClassRoomController extends AbstractController
         $classRoom->setEnabled(!$classRoom->isEnabled());
         $this->getDoctrine()->getManager()->flush();
 
-        return $this->json([]);
+        return $this->json($classRoom);
     }
 
     /**
      * @Route("/{id}/edit", methods={"PUT"})
      */
-    public function editAction(Request $request)
+    public function editAction(ClassRoom $classRoom, Request $request)
     {
         try {
-            $classroom = $this->serializer->deserialize($request->getContent(), ClassRoom::class, 'json');
+            $classRoomObj = $this->serializer->deserialize($request->getContent(), ClassRoom::class, 'json');
         } catch (\Exception $e) {
             // log exception
             return $this->json([], 400);
         }
-        $errors = $this->validator->validate($classroom);
+
+        if ($classRoomObj->getName()) {
+            $classRoom->setName($classRoomObj->getName());
+        }
+        if ($classRoomObj->isEnabled() !== $classRoom->isEnabled()) {
+            $classRoom->setEnabled($classRoomObj->isEnabled());
+        }
+        $errors = $this->validator->validate($classRoom);
 
         $messages = [];
         if (count($errors) > 0) {
@@ -112,7 +119,7 @@ class ClassRoomController extends AbstractController
         }
         $this->getDoctrine()->getManager()->flush();
 
-        return $this->json([], 200);
+        return $this->json($classRoom, 200);
     }
 
     /**
