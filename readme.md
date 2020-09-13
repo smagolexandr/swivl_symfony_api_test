@@ -149,7 +149,7 @@ You can use [Postman collection](https://www.getpostman.com/collections/c29f61b6
    
    Request [DELETE]
     ```
-    DELETE {base-url}/api/classroom/{id}
+    DELETE {host}/api/classroom/{id}/delete
     ```
    Response body [200]
    ```
